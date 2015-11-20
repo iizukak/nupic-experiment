@@ -16,21 +16,20 @@
 import nltk
 import unicodecsv as csv
 from nltk.corpus import webtext
-
 import pos_tag_id
 
 DATA_DIR = "data/"
 
-print("Tokenizing Text...")
-text = nltk.word_tokenize(webtext.raw("firefox.txt"))
-print("Analysing POS tag...")
-pos_list = nltk.pos_tag(text)
+for fileid in webtext.fileids():
+    print("Tokenizing Text for" + fileid)
+    text = nltk.word_tokenize(webtext.raw(fileid))
+    print("Analysing POS tag...")
+    pos_list = nltk.pos_tag(text)
 
-# Add POS tag ID
-# ("cat", "NN") -> ("cat", "NN", 20)
-pos_list = map(lambda x: (x[0], x[1], pos_tag_id.TAG_IDS[x[1]]), pos_list)
+    output_path = DATA_DIR + fileid.replace(".txt", "") + "-pos-list.csv"
+    print(output_path, "Writing to CSV")
+    with open(output_path, 'w') as f:
+        writer = csv.writer(f, encoding='utf-8')
+        writer.writerows(pos_list)
 
-print("Writing to CSV...")
-with open(DATA_DIR + 'firefox-pos-list.csv', 'w') as f:
-    writer = csv.writer(f, encoding='utf-8')
-    writer.writerows(pos_list)
+    print(output_path + " closed")
