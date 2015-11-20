@@ -16,7 +16,6 @@
 import nltk
 import unicodecsv as csv
 from nltk.corpus import webtext
-import pos_tag_id
 
 DATA_DIR = "data/"
 
