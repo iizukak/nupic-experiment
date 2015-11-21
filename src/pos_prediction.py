@@ -6,12 +6,14 @@ import unicodecsv as csv
 from nupic.data.inference_shifter import InferenceShifter
 from nupic.frameworks.opf.modelfactory import ModelFactory
 import pprint
+import os
 
 import model_params.model_params as model_params
 import pos_tags
 
 DATA_DIR = "data/"
 INPUT_FILE = "firefox-pos-list.csv"
+MODEL_DIR = os.getcwd() + "/model"
 
 def addCategoryEncoder(params):
     params["modelParams"]["sensorParams"]["encoders"].update({ 
@@ -23,18 +25,49 @@ def addCategoryEncoder(params):
             "w": 23
         }
     })
-    # pprint.pprint(params)
     return params
 
-def getModel():
+
+def createModel(verbosity=False):
     model = ModelFactory.create(addCategoryEncoder(model_params.MODEL_PARAMS))
     model.enableInference({"predictedField": "token"})
+
+    if verbosity:
+        print(model)
+
     return model
 
-def createModelAndRun():
-    model = getModel()
-    
 
-# getModel()
-shifter = InferenceShifter()
+def main():
+    model = createModel(verbosity = True)
+    shifter = InferenceShifter()
+
+    input_file_name = DATA_DIR + INPUT_FILE
+    output_file_name = DATA_DIR + "out.csv"
+
+    countor = 1
+    with open(input_file_name, 'r') as f1, open(output_file_name, 'w') as f2:
+        reader = csv.reader(f1)
+        writer = csv.writer(f2)
+        for row in reader:
+
+            if countor % 100 == 0:
+                print("input line:", countor)
+
+            model_input = {"token": row[1]}
+            result = shifter.shift(model.run(model_input))
+            # print("DEBUG:", row[1], result.inferences["anomalyScore"])
+
+            if countor % 1000 == 0:
+                print("result:", result)
+                model.save(MODEL_DIR)
+
+            writer.writerow(row + [result.inferences["anomalyScore"]])
+
+            countor += 1
+    print("saving model to", MODEL_DIR)
+    model.save(MODEL_DIR)
+
+if __name__ == "__main__":
+    main()
 
