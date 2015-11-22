@@ -1,4 +1,4 @@
-# nupic-experiment
+# nupic-nlp-experiment
 NuPIC Experiment Repository
 
 ## Usage
@@ -24,10 +24,10 @@ This command takes about ~1min.
 
 ```
 python src/pos_learning.py
-
 ```
 
-This command takes about ~1.5 hour
+This command takes about ~1.5 hour. If `model` directory exist,
+script fail to run, do `rm -rf model` before run script.
 
 ### Detect Anomaly
 
