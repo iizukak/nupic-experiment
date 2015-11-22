@@ -17,4 +17,28 @@ pip install -r requirements.txt --user
 python src/gen_pos_list.py
 ```
 
-This command takes ~1min.
+This command takes about ~1min.
+
+
+### Create model
+
+```
+python src/pos_learning.py
+
+```
+
+This command takes about ~1.5 hour
+
+### Detect Anomaly
+
+start IPython console.
+
+```
+import src.pos_err_detect as pos_err_detect
+pos_err_detect.posErrDetect("This is a pen.")
+(('This', 'DT'), 1.0)
+(('is', 'VBZ'), 0.0)
+(('a', 'DT'), 0.0)
+(('pen', 'NN'), 0.0)
+(('.', '.'), 0.050000000000000003)
+```
