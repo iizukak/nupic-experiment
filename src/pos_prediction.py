@@ -50,16 +50,15 @@ def main():
         reader = csv.reader(f1)
         writer = csv.writer(f2)
         for row in reader:
+            model_input = {"token": row[1]}
+            result = shifter.shift(model.run(model_input))
 
             if countor % 100 == 0:
                 print("input line:", countor)
-
-            model_input = {"token": row[1]}
-            result = shifter.shift(model.run(model_input))
-            # print("DEBUG:", row[1], result.inferences["anomalyScore"])
-
             if countor % 1000 == 0:
                 print("result:", result)
+            if countor % 5000 == 0:
+                print("save model")
                 model.save(MODEL_DIR)
 
             writer.writerow(row + [result.inferences["anomalyScore"]])
