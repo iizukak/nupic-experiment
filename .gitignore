@@ -7,3 +7,4 @@ search_def_*.csv
 model/*
 *.DS_Store*
 *.ipynb_checkpoints*
+data/*
