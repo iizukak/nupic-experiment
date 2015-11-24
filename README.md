@@ -14,12 +14,12 @@ Some Python libraries are required. We can install them with `pip`.
 We should use Python 2.x, not 3.x. Because current NuPIC do not support Python 3.x...
 
 ```
-pip install -r requirements.txt --user
+$ pip install -r requirements.txt --user
 ```
 
 ### Install NLTK corpora
 
-We use [NLTKs corpora](http://www.nltk.org/book/ch02.html) for experiment. Install corpura using `nltk.download_shell()`.
+We use [NLTKs corpora](http://www.nltk.org/book/ch02.html) for experiment. Install corpura using `nltk.download_shell()`. Start Python interactive environment and hit this command.
 
 ```
 In [1]: import nltk   
@@ -44,26 +44,26 @@ Download which package (l=list; x=cancel)?
 
 ### Data pre-processing
 
-Before learning grammatical model using corora, we sould generate [POS](https://en.wikipedia.org/wiki/Part_of_speech) tag data files. Stay toplevel directory and hit under the command.
+Before learning grammatical model using corpora, we sould generate [POS](https://en.wikipedia.org/wiki/Part_of_speech) tag data files. Stay toplevel directory and hit under the command.
 
 ```
-python src/gen_pos_list.py
+$ python src/gen_pos_list.py
 ```
 
 This command takes about ~1min. Output files are in `data` directory. File format is
 
 ```
 $ head -n 10 data/firefox-pos-list.csv 
-Cookie,NNP,210
-Manager,NNP,210
-:,:,80
-``,``,450
-Do,VBP,390
-n't,RB,280
-allow,VB,350
-sites,NNS,230
-that,WDT,410
-set,VBP,390
+Cookie,NNP
+Manager,NNP
+:,:
+``,``
+Do,VBP
+n't,RB
+allow,VB
+sites,NNS
+that,WDT
+set,VBP
 ```
 
 First column is raw string of corpus, second is POS tag detected by NLTK.
@@ -74,7 +74,7 @@ First column is raw string of corpus, second is POS tag detected by NLTK.
 Next, we make gramattical model using POS tag stream.
 
 ```
-python src/pos_learning.py
+$ python src/pos_learning.py
 ```
 
 This command takes about ~1.5 hour. If `model` directory already exist,
