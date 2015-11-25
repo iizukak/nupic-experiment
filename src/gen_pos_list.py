@@ -16,19 +16,15 @@
 import nltk
 import unicodecsv as csv
 from nltk.corpus import webtext
+from nltk.corpus import brown
 
 DATA_DIR = "data/"
 
-for fileid in webtext.fileids():
-    print("Tokenizing Text for" + fileid)
-    text = nltk.word_tokenize(webtext.raw(fileid))
-    print("Analysing POS tag...")
-    pos_list = nltk.pos_tag(text)
+pos_list = brown.tagged_words(categories='news')
+output_path = DATA_DIR + "news-pos-list.csv"
+print(output_path, "Writing to CSV")
+with open(output_path, 'w') as f:
+    writer = csv.writer(f, encoding='utf-8')
+    writer.writerows(pos_list)
 
-    output_path = DATA_DIR + fileid.replace(".txt", "") + "-pos-list.csv"
-    print(output_path, "Writing to CSV")
-    with open(output_path, 'w') as f:
-        writer = csv.writer(f, encoding='utf-8')
-        writer.writerows(pos_list)
-
-    print(output_path + " closed")
+print(output_path + " closed")

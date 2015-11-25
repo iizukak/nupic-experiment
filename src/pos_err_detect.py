@@ -15,6 +15,7 @@ shifter = InferenceShifter()
 
 
 def posErrDetect(target_str):
+    # model.resetSequenceStates() 
     pos_list = nltk.pos_tag(nltk.word_tokenize(target_str))
     for row in pos_list:
         model_input = {"token": row[1]}

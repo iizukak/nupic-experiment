@@ -12,7 +12,7 @@ import model_params.model_params as model_params
 import pos_tags
 
 DATA_DIR = "data/"
-INPUT_FILE = "firefox-pos-list.csv"
+INPUT_FILE = "news-pos-list.csv"
 MODEL_DIR = os.getcwd() + "/model"
 
 def addCategoryEncoder(params):
