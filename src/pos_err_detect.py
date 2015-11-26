@@ -5,6 +5,7 @@
 #
 
 import nltk
+import pprint
 from nupic.frameworks.opf.modelfactory import ModelFactory
 from nupic.data.inference_shifter import InferenceShifter
 
@@ -20,4 +21,10 @@ def posErrDetect(target_str):
     for row in pos_list:
         model_input = {"token": row[1]}
         result = shifter.shift(model.run(model_input))
-        print(row, result.inferences["anomalyScore"])
+        pprint.pprint(row)
+        dic = result.inferences["multiStepPredictions"][1]
+        if type(dic) == type({}):
+            if dic.has_key(row[1]):
+                print(dic[row[1]])
+            else:
+                print(0)

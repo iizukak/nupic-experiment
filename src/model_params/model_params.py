@@ -3,7 +3,7 @@ MODEL_PARAMS = {
     "version": 1,
     "predictAheadTime": None,
     "modelParams": {
-        "inferenceType": "TemporalAnomaly",
+        "inferenceType": "TemporalMultiStep",
         "sensorParams": {
             "verbosity" : 0,
             "encoders": {},

@@ -7,6 +7,7 @@ from nupic.frameworks.opf.modelfactory import ModelFactory
 import pprint
 import os
 
+import nltk
 from nltk.corpus import brown
 
 import model_params.model_params as model_params
@@ -37,8 +38,9 @@ def createModel(verbosity, categories):
 
 
 def fetchCorpus():
-    corpus = brown.tagged_sents(categories="news")
-    categories = list(set(map(lambda x:x[1] , brown.tagged_words(categories="news"))))
+    corpus = nltk.pos_tag(brown.words(categories="news"))
+    print(corpus)
+    categories = list(set(map(lambda x:x[1], corpus)))
 
     print("corpus: ", corpus)
     print("categories: ", categories)
@@ -51,22 +53,19 @@ def main():
     shifter = InferenceShifter()
     counter = 1
 
-    for sentence in corpus:
-        # reset sequence each sentence
-        model.resetSequenceStates() 
-        for word in sentence:
-            model_input = {"token": word[1]}
-            result = shifter.shift(model.run(model_input))
+    for word in corpus:
+        model_input = {"token": word[1]}
+        result = shifter.shift(model.run(model_input))
 
-            if counter % 100 == 0:
-                print("input line:", counter)
-            if counter % 1000 == 0:
-                print("result:", result)
-            if counter % 5000 == 0:
-                print("save model")
-                model.save(MODEL_DIR)
+        if counter % 100 == 0:
+            print("input line:", counter)
+        if counter % 1000 == 0:
+            print("result:", result)
+        if counter % 5000 == 0:
+            print("save model")
+            model.save(MODEL_DIR)
 
-            counter += 1
+        counter += 1
     print("saving model to", MODEL_DIR)
     model.save(MODEL_DIR)
 
