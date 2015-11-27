@@ -38,7 +38,9 @@ def createModel(verbosity, categories):
 
 
 def fetchCorpus():
-    corpus = nltk.pos_tag(brown.words(categories="news"))
+    corpus = nltk.pos_tag(brown.words(categories="news") +
+                          brown.words(categories="editorial") + 
+                          brown.words(categories="reviews"))
     categories = list(set(map(lambda x:x[1], corpus)))
 
     return corpus, categories
