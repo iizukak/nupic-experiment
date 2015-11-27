@@ -4,7 +4,6 @@
 
 from nupic.data.inference_shifter import InferenceShifter
 from nupic.frameworks.opf.modelfactory import ModelFactory
-import pprint
 import os
 
 import nltk
@@ -19,9 +18,10 @@ def addCategoryEncoder(params, categories):
         "token": {
             "fieldname": u"token",
             "name": u"token",
-            "type": "CategoryEncoder",
+            "type": "SDRCategoryEncoder",
             "categoryList": categories,
-            "w": 23
+            "w": 23,
+            "n": len(categories) * 23
         }
     })
     return params
@@ -39,11 +39,8 @@ def createModel(verbosity, categories):
 
 def fetchCorpus():
     corpus = nltk.pos_tag(brown.words(categories="news"))
-    print(corpus)
     categories = list(set(map(lambda x:x[1], corpus)))
 
-    print("corpus: ", corpus)
-    print("categories: ", categories)
     return corpus, categories
 
 
