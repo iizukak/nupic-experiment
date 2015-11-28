@@ -12,6 +12,7 @@ from nltk.corpus import brown
 import model_params.model_params as model_params
 
 MODEL_DIR = os.getcwd() + "/model"
+CORPUS_SIZE = 20000
 
 def addCategoryEncoder(params, categories):
     params["modelParams"]["sensorParams"]["encoders"].update({ 
@@ -38,9 +39,11 @@ def createModel(verbosity, categories):
 
 
 def fetchCorpus():
-    corpus = nltk.pos_tag(brown.words(categories="news") +
-                          brown.words(categories="editorial") + 
-                          brown.words(categories="reviews"))
+    corpus = nltk.pos_tag(brown.words(categories="news")[:CORPUS_SIZE] +
+                          brown.words(categories="editorial")[:CORPUS_SIZE] + 
+                          brown.words(categories="reviews")[:CORPUS_SIZE] +
+                          brown.words(categories="lore")[:CORPUS_SIZE] +
+                          brown.words(categories="hobbies")[:CORPUS_SIZE])
     categories = list(set(map(lambda x:x[1], corpus)))
 
     return corpus, categories
