@@ -82,5 +82,7 @@ Out[3]:
 (Input word, Tagged POS by NLTK, Accuracy)
 ```
 
-It's assume that NKTL's tagging is correct.
-Accuracy is NuPIC predict each tag how accuracy. It's take [0,1] range.
+It's assume that NLTK's tagging is *always correct*.
+I know this assumption is not perfect... 
+Accuracy takes `[0,1]` range.
+This parameter shows NuPIC predict correct POS with how accuracy.
