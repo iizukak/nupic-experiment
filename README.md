@@ -55,7 +55,7 @@ script fail to run, do `rm -rf model` before run script.
 After create model. Now we can predict POS of a sentence.
 
 ```
-In [1]: from src.pos_err_detect import posErrDetect
+In [1]: from src.pos_prediction import predictPOS  
 
 In [3]: predictPOS("Numenta has developed a number of applications to demonstrate the applicability of its technology.")
 Out[3]: 
