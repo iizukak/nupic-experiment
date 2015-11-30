@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #
-# This script detect English Grammer Error
+# This script is main module of this repository.
+# Predict next word's POS in the sentence.
 #
 
 import nltk
@@ -14,8 +15,7 @@ model.disableLearning()
 shifter = InferenceShifter()
 
 
-def posErrDetect(target_str):
-    # model.resetSequenceStates() 
+def predictPOS(target_str):
     pos_list = nltk.pos_tag(nltk.word_tokenize(target_str))
     ret = []
     for row in pos_list:
